@@ -12,6 +12,8 @@ const [personsState, setPersonsState] =  useState({
     ]
   });
 
+ const [otherState, setOtherState] = useState('some other value');
+
   const switchNameHandler = () => {
     setPersonsState({
      persons: [
