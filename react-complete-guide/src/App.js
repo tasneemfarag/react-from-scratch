@@ -1,32 +1,39 @@
 import React, { Component } from 'react';
 import './App.css';
 import Person from './Person/Person';
-import person from './Person/Person';
+
 
 class App extends Component {
   state = {
     persons: [
-      { name: 'Max', age: 28 },
-      { name: 'Manu', age: 29 },
-      { name: 'Steph', age: 28 }
+      { id: 'dddd', name: 'Max', age: 28 },
+      { id: 'fgfgt', name: 'Manu', age: 29 },
+      { id: 'nmmk', name: 'Steph', age: 28 }
     ],
     otherState: 'some other value',
     showPersons: false
   }
 
-  nameChangedHandler = (e) => {
-    this.setState({
-      persons: [
-        { name: 'Max', age: 28 },
-        { name: e.target.value, age: 29 },
-        { name: 'Steph', age: 26 }
-      ]
+  nameChangedHandler = (e, id) => {
+    const personIndex = this.state.persons.findIndex(p => {
+      return p.id === id;
     });
+
+    const person = { 
+      ...this.state.persons[personIndex]
+    };
+
+    person.name = e.target.value;
+    const persons = [...this.state.persons];
+    persons[personIndex] = person;
+
+    this.setState({persons: persons});
   }
 
   deletePersonHandler = (personIndex) => {
-    const persons = this.state.persons;
+    //const persons = this.state.persons.slice(); this is right approch
    // persons.filter(person => person.index !== personIndex)
+   const persons = [...this.state.persons];//the more modern E6X
    persons.splice(personIndex, 1);
    this.setState({ persons: persons });
   }
@@ -56,7 +63,9 @@ class App extends Component {
             return <Person
               click={() => this.deletePersonHandler(index)}
               name={person.name}
-              age={person.age} />
+              age={person.age}
+              key={person.id}
+              changed={(e) => this.nameChangedHandler(e, person.id)} />
           })}
 
         </div>
