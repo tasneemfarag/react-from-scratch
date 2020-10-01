@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
 import './App.css';
-import Radium, { StyleRoot } from 'radium';
 import Person from './Person/Person';
 
+
+const StyledButton = styled.button`
+      
+`;
 
 class App extends Component {
   state = {
@@ -20,7 +24,7 @@ class App extends Component {
       return p.id === id;
     });
 
-    const person = { 
+    const person = {
       ...this.state.persons[personIndex]
     };
 
@@ -28,15 +32,15 @@ class App extends Component {
     const persons = [...this.state.persons];
     persons[personIndex] = person;
 
-    this.setState({persons: persons});
+    this.setState({ persons: persons });
   }
 
   deletePersonHandler = (personIndex) => {
     //const persons = this.state.persons.slice(); this is right approch
-   // persons.filter(person => person.index !== personIndex)
-   const persons = [...this.state.persons];//the more modern E6X
-   persons.splice(personIndex, 1);
-   this.setState({ persons: persons });
+    // persons.filter(person => person.index !== personIndex)
+    const persons = [...this.state.persons];//the more modern E6X
+    persons.splice(personIndex, 1);
+    this.setState({ persons: persons });
   }
 
   togglePersonsHandler = () => {
@@ -76,34 +80,30 @@ class App extends Component {
 
         </div>
       );
-      style.backgroundColor = 'red';
-      style[':hover'] = {
-        backgroundColor: 'salmon',
-        color: 'black'
-      }
+      // style.backgroundColor = 'red';
+      // style[':hover'] = {
+      //   backgroundColor: 'salmon',
+      //   color: 'black'
+      // };
     }
 
     const classes = [];
-    if(this.state.persons.length <= 2) {
+    if (this.state.persons.length <= 2) {
       classes.push('red');
     }
-    if(this.state.persons.length <= 1) {
+    if (this.state.persons.length <= 1) {
       classes.push('bold');
     }
 
     return (
-      <StyleRoot>
       <div className="App">
         <h1>hi</h1>
         <p className={classes.join(' ')}>this is really working</p>
-        <button
-          style={style}
-          onClick={this.togglePersonsHandler}>Toggle Persons</button>
+        <button className="button" onClick={this.togglePersonsHandler}>Toggle Persons</button>
         {persons}
       </div>
-      </StyleRoot>
     );
   }
 }
 
-export default Radium(App);
+export default App;
