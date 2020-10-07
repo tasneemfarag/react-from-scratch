@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import classes from './App.css';
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
-import WithClass from '../hoc/WithClass';
+import withClass from '../hoc/withClass';
+import Aux from '../hoc/Aux';
 
 class App extends Component {
   constructor(props) {
@@ -21,7 +22,7 @@ class App extends Component {
   }
 
   static getDerivedStateFromProps(props, state) {
-    console.log ('[App.js] getDerivedStateFromProps', props);
+    console.log('[App.js] getDerivedStateFromProps', props);
     return state;
   }
 
@@ -78,27 +79,27 @@ class App extends Component {
     console.log('[App.js] render');
 
     let persons = null;
-    
+
     if (this.state.showPersons) {
-      persons = 
-          <Persons 
+      persons =
+        <Persons
           persons={this.state.persons}
           clicked={this.deletePersonHandler}
           changed={this.nameChangedHandler} />;
     }
 
     return (
-      <WithClass classes={classes.App}>
-       <button onClick={() => {this.setState({showCockpit: false})} }>Remove Cockpit</button> 
-       { this.state.showCockpit ? <Cockpit 
-       title={this.props.appTitle}
-       showPersons={this.state.showPersons} 
-       personsLength={this.state.persons.length}
-       clicked={this.togglePersonsHandler} /> : null }
+      <Aux>
+        <button onClick={() => { this.setState({ showCockpit: false }) }}>Remove Cockpit</button>
+        {this.state.showCockpit ? <Cockpit
+          title={this.props.appTitle}
+          showPersons={this.state.showPersons}
+          personsLength={this.state.persons.length}
+          clicked={this.togglePersonsHandler} /> : null}
         {persons}
-      </WithClass>
+      </Aux>
     );
   }
 }
 
-export default App;
+export default withClass(App, classes.App);
